@@ -1,19 +1,15 @@
 public class BDD {
 
-    private int pocetPremennych;//kolko riadkov
-    private int velkostBDD;//pocet uzlov
+    int pocetPremennych;//kolko riadkov
+    int pocetUzlov;//pocet uzlov
     Node root;
 
 
-//    public BDD(Node node, int pocetPremennych, int velkostBDD){//
-//        this.root = node;
-//        this.pocetPremennych = pocetPremennych;
-//        this.velkostBDD = velkostBDD;
-//
-//
-//    }
-
-
+    public BDD(){
+        pocetPremennych = 0;
+        pocetUzlov = 0;
+        root = null;
+    }
 
 
 
@@ -23,6 +19,7 @@ public class BDD {
         root = new Node(input);
 
         createNode(root, input);
+        pocetUzlov++;
 
 
         return null;
@@ -33,8 +30,6 @@ public class BDD {
     private Node createNode(Node node, String input) {
 
         if(node == null){
-            //node.left = createNode(new Node(input), input);
-            System.out.println("splnila sa podmienka");
             return new Node(input);
 
         }
@@ -42,10 +37,12 @@ public class BDD {
         if(node.left == null && input.length() != 1) {
             node.left = createNode(node.left, rozdelitStringLava(input));
             node.right = createNode(node.right, rozdelitStringPrava(input));
+            pocetUzlov++;
 
         } if(node.right != null && input.length() != 1){
             node.left = createNode(node.left, rozdelitStringLava(input));
             node.right = createNode(node.right, rozdelitStringPrava(input));
+            pocetUzlov++;
         }
 
 
@@ -65,6 +62,8 @@ public class BDD {
      */
     private String rozdelitStringPrava(String aktString) {
         int length = aktString.length();
+
+        pocetPremennych++;
 //        StringBuilder pravaCast = new StringBuilder();
 //
 //
@@ -104,8 +103,30 @@ public class BDD {
     }
 
 
-    public void BDD_use(){
+    public char BDD_use(BDD bdd, String vstup){
 
+       int vstupLength = vstup.length();
+       int i = 0;
+       char aktChar;//reprezentuje akt char vstupu
+       Node aktNode = bdd.root;
+
+       while(i < vstupLength){
+            aktChar = vstup.charAt(i);//akt char vo vstupe
+            if(aktChar == '1'){
+               aktNode =  aktNode.right;
+
+            }else if(aktChar == '0'){
+                aktNode = aktNode.left;
+            }
+           i++;
+       }
+
+
+        return aktNode.key.charAt(0);
     }
+
+
+
+
 
 }
