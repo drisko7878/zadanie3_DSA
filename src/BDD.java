@@ -34,34 +34,46 @@ public class BDD {
 
         if(node == null){
             //node.left = createNode(new Node(input), input);
-            System.out.println("splnila sa podmienka left");
+            System.out.println("splnila sa podmienka");
             return new Node(input);
 
         }
 
-        //System.out.println("splnila sa podmienka left");
-
-        else{
+        if(node.left == null && input.length() != 1) {
             node.left = createNode(node.left, rozdelitStringLava(input));
             node.right = createNode(node.right, rozdelitStringPrava(input));
 
+        } if(node.right != null && input.length() != 1){
+            node.left = createNode(node.left, rozdelitStringLava(input));
+            node.right = createNode(node.right, rozdelitStringPrava(input));
         }
+
+
+
+
+
         return node;
 
 
     }
 
+
+    /**
+     * Vrati pravu cast Stringu
+     * @param aktString
+     * @return
+     */
     private String rozdelitStringPrava(String aktString) {
         int length = aktString.length();
-        StringBuilder pravaCast = new StringBuilder();
+//        StringBuilder pravaCast = new StringBuilder();
+//
+//
+//        for(int i = length / 2; i < length; i++){
+//            pravaCast.append(aktString.charAt(i));
+//
+//        }
 
-
-        for(int i = length / 2; i < length; i++){
-            pravaCast.append(aktString.charAt(i));
-
-        }
-
-        return pravaCast.toString();
+        return aktString.substring(length / 2, length );
 
 
 
@@ -76,14 +88,14 @@ public class BDD {
     private String rozdelitStringLava(String aktString) {
         int length = aktString.length();
         //String lavaCast;
-        StringBuilder lavaCast = new StringBuilder();
+        //StringBuilder lavaCast = new StringBuilder();
 
-        for(int i = 0; i < length / 2; i++){
-            lavaCast.append(aktString.charAt(i));
+//        for(int i = 0; i < length / 2; i++){
+//            lavaCast.append(aktString.charAt(i));
+//
+//        }
 
-        }
-
-        return lavaCast.toString();
+        return aktString.substring(0, length / 2);
 
 
 
