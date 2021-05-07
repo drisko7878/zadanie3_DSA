@@ -16,13 +16,14 @@ public class BDD {
     public BDD BDD_create(String input){//argument moze byt string
         int cisloSize = input.length();
 
-        root = new Node(input);
+        BDD bdd = new BDD();
+       // bdd.root = new Node(input);
 
-        createNode(root, input);
+        bdd.root = createNode(root = new Node(input), input);
         pocetUzlov++;
 
 
-        return null;
+        return bdd;
 
     }
 
@@ -30,6 +31,7 @@ public class BDD {
     private Node createNode(Node node, String input) {
 
         if(node == null){
+            //pocetUzlov++;
             return new Node(input);
 
         }
@@ -40,6 +42,7 @@ public class BDD {
             pocetUzlov++;
 
         } if(node.right != null && input.length() != 1){
+            System.out.println("splenene");
             node.left = createNode(node.left, rozdelitStringLava(input));
             node.right = createNode(node.right, rozdelitStringPrava(input));
             pocetUzlov++;
@@ -62,19 +65,9 @@ public class BDD {
      */
     private String rozdelitStringPrava(String aktString) {
         int length = aktString.length();
-
         pocetPremennych++;
-//        StringBuilder pravaCast = new StringBuilder();
-//
-//
-//        for(int i = length / 2; i < length; i++){
-//            pravaCast.append(aktString.charAt(i));
-//
-//        }
 
         return aktString.substring(length / 2, length );
-
-
 
     }
 
@@ -86,19 +79,8 @@ public class BDD {
      */
     private String rozdelitStringLava(String aktString) {
         int length = aktString.length();
-        //String lavaCast;
-        //StringBuilder lavaCast = new StringBuilder();
-
-//        for(int i = 0; i < length / 2; i++){
-//            lavaCast.append(aktString.charAt(i));
-//
-//        }
 
         return aktString.substring(0, length / 2);
-
-
-
-
 
     }
 
