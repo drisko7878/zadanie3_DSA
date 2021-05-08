@@ -15,8 +15,8 @@ public class Main {
 
         //mensiVstup(bdd);//vstup 01100110
 
-        //test1(bdd);//vstup 2^12
-        test2(bdd);//2^13
+        test1(bdd);//vstup 2^12
+      //  test2(bdd);//2^13
 
 
 //        long endTime = System.nanoTime();//koniec
@@ -99,11 +99,10 @@ public class Main {
     }
 
 
-
-
-
-
-
+    /**
+     * testuje sa vstup 2^12
+     * @param bdd
+     */
     public static void test1(BDD bdd){
 
         String vstup;
@@ -111,7 +110,7 @@ public class Main {
         //FUNKCIA CREATE SA ZAVOLA 2000 krat, pri kazdom volani je vygenerovane nova hodnota
         for(int k = 0; k < 2000; k++) {
             long startTime = System.nanoTime();//start casovac
-            vstup = generateSequence();//vygeneruje string s 2^13 cislami
+            vstup = generateSequence12();//vygeneruje string s 2^12 cislami
             bdd = bdd.BDD_create(vstup);//vytvori sa rozhodovaci diagram
 
 
@@ -121,7 +120,7 @@ public class Main {
             StringBuilder stringBuilder = new StringBuilder();
             String docasnyString;
 
-            for (int i = 0; i < Math.pow(2, 12); i++) {//funkcia use sa zavola 2^13 krat
+            for (int i = 0; i < Math.pow(2, 12); i++) {//funkcia use sa zavola 2^12 krat
 
                 stringBuilder.delete(0, stringBuilder.length());//reset String
                 docasnyString = "";//reset String
@@ -195,7 +194,7 @@ public class Main {
         //FUNKCIA CREATE SA ZAVOLA 2000 krat, pri kazdom volani je vygenerovane nova hodnota
         for(int k = 0; k < 2000; k++) {
             long startTime = System.nanoTime();//start casovac
-            vstup = generateSequence();//vygeneruje string s 2^13 cislami
+            vstup = generateSequence13();//vygeneruje string s 2^13 cislami
             bdd = bdd.BDD_create(vstup);//vytvori sa rozhodovaci diagram
 
 
@@ -250,22 +249,44 @@ public class Main {
 
 
 
+    }
 
 
 
-
-
-
-
-
-
+    private static void test3(BDD bdd){
 
     }
 
 
 
 
+    /**
+     * zavolat 2000 krat pri vytvarani
+     * @return
+     */
+    public static String generateSequence12(){
+        System.out.println();
+        Random r = new Random();
+        int low = 0;
+        int high = 2;
+        int result;
 
+        StringBuilder builder = new StringBuilder();
+        for(int i = 0; i < (int) Math.pow(2, 12); i++){
+            result = r.nextInt(high-low) + low;
+
+            if(result == 1)
+                builder.append("1");
+
+            else if(result == 0)
+                builder.append("0");
+
+
+        }
+
+        return builder.toString();
+
+    }
 
 
 
@@ -280,7 +301,7 @@ public class Main {
      * zavolat 2000 krat pri vytvarani
      * @return
      */
-    public static String generateSequence(){
+    public static String generateSequence13(){
         System.out.println();
         Random r = new Random();
         int low = 0;
