@@ -50,7 +50,7 @@ public class BDD {
             //pocetUzlov++;
 
         } if(node.right != null && input.length() != 1){
-            System.out.println("splenene");
+            //System.out.println("splenene");
             node.left = createNode(node.left, rozdelitStringLava(input), bdd, height);
             node.right = createNode(node.right, rozdelitStringPrava(input), bdd, height);
             //pocetUzlov++;

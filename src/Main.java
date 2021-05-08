@@ -5,6 +5,8 @@ public class Main {
 
     public static void main(String[] args) {
 
+        long startTime = System.nanoTime();//start casovac
+
         BDD bdd = new BDD();
 
         //mensiVstup(bdd);
@@ -15,6 +17,11 @@ public class Main {
         test2(bdd);
 
 
+        long endTime = System.nanoTime();//koniec
+        long timeElapsed = endTime - startTime;
+
+        System.out.println("Execution time in nanoseconds: " + timeElapsed);
+        System.out.println("Execution time in milliseconds: " + timeElapsed / 1000000);
 
 
       //  System.out.println(bdd.root.right.right.right.left.key);
@@ -96,44 +103,48 @@ public class Main {
      */
     private static void test2(BDD bdd) {
 
-        String vstup = generateSequence();//vygeneruje string s 2^13 cislami
+        //String vstup = generateSequence();//vygeneruje string s 2^13 cislami
 
-        bdd = bdd.BDD_create(vstup);//vytvori sa rozhodovaci diagram
+        String vstup;
+
+        for(int k = 0; k < 2000; k++) {
+            vstup = generateSequence();//vygeneruje string s 2^13 cislami
+            bdd = bdd.BDD_create(vstup);//vytvori sa rozhodovaci diagram
 
 
-        StringBuilder postupnost = new StringBuilder();
+            StringBuilder postupnost = new StringBuilder();
 
-        //KOD NA CYKLUS - POMOCOU FUNKCII USE() VYSKLADA STRING NA POROVNANIE
-        StringBuilder stringBuilder = new StringBuilder();
-        String docasnyString;
-        for(int i = 0; i < Math.pow(2, 13); i++) {
-            stringBuilder.delete(0, stringBuilder.length());//reset String
-            docasnyString = "";//reset String
+            //KOD NA CYKLUS - POMOCOU FUNKCII USE() VYSKLADA STRING NA POROVNANIE
+            StringBuilder stringBuilder = new StringBuilder();
+            String docasnyString;
+            for (int i = 0; i < Math.pow(2, 13); i++) {
+                stringBuilder.delete(0, stringBuilder.length());//reset String
+                docasnyString = "";//reset String
 
-            docasnyString = Integer.toBinaryString(i);
+                docasnyString = Integer.toBinaryString(i);
 
-            if(docasnyString.length() < 13){
-                for(int j = 0; j < (13 - docasnyString.length()); j++){
-                    stringBuilder.append(0);
+                if (docasnyString.length() < 13) {
+                    for (int j = 0; j < (13 - docasnyString.length()); j++) {
+                        stringBuilder.append(0);
+                    }
+                    stringBuilder.append(docasnyString);
+
+                } else {
+                    stringBuilder.append(docasnyString);
                 }
-                stringBuilder.append(docasnyString);
+                //System.out.println(stringBuilder.toString());
+                postupnost.append(bdd.BDD_use(bdd, stringBuilder.toString()));
 
-            }else{
-                stringBuilder.append(docasnyString);
             }
-            System.out.println(stringBuilder.toString());
-            postupnost.append(bdd.BDD_use(bdd, stringBuilder.toString()));
 
-        }
+//            System.out.println("VO FUNKCII CREATE: " + vstup);
+//            System.out.println("PO VOLANI USE:     " + postupnost);
 
-        System.out.println("VO FUNKCII CREATE: " + vstup );
-        System.out.println("PO VOLANI USE:     " + postupnost);
+            if (!(postupnost.toString().equals(vstup))) {//POROVNA STRINGY
+                System.out.println("**Stringy sa nerovnaju**");
 
-        if(postupnost.toString().equals(vstup)){//POROVNA STRINGY
-            System.out.println("**Stringy sa rovnaju**");
+            }
 
-        }else{
-            System.out.println("Stringy sa nerovnaju");
         }
 
 
