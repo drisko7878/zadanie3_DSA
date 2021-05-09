@@ -33,7 +33,8 @@ public class BDD {
     private Node createNode(Node node, String input, BDD bdd, int height) {
 
         height++;
-        if(bdd.pocetPremennych < height){
+
+        if(bdd.pocetPremennych < height){//sluzi na pocitanie premennych
             bdd.pocetPremennych = height;
         }
 
