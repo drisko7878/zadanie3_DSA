@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.Random;
 
 public class Main {
@@ -46,43 +47,43 @@ public class Main {
         System.out.println("Pocet premennych: " + bdd.pocetPremennych);
         System.out.println("Pocet uzlov: " + bdd.pocetUzlov);
 
-        System.out.println();
 
-
-
-//        builder.append(bdd.BDD_use(bdd, "000" ));
-//        builder.append(bdd.BDD_use(bdd, "001" ));
-//        builder.append(bdd.BDD_use(bdd, "010" ));
-//        builder.append(bdd.BDD_use(bdd, "011" ));
-//        builder.append(bdd.BDD_use(bdd, "100" ));
-//        builder.append(bdd.BDD_use(bdd, "101" ));
-//        builder.append(bdd.BDD_use(bdd, "110" ));
-//        builder.append(bdd.BDD_use(bdd, "111" ));
 
         StringBuilder postupnost = new StringBuilder();
 
-        //KOD NA CYKLUS
-        StringBuilder stringBuilder = new StringBuilder();
-        String docasnyString;
-        for(int i = 0; i < Math.pow(2, 3); i++) {
-            stringBuilder.delete(0, stringBuilder.length());//reset String
-            docasnyString = "";//reset String
+        postupnost.append(bdd.BDD_use(bdd, "000" ));
+        postupnost.append(bdd.BDD_use(bdd, "001" ));
+        postupnost.append(bdd.BDD_use(bdd, "010" ));
+        postupnost.append(bdd.BDD_use(bdd, "011" ));
+        postupnost.append(bdd.BDD_use(bdd, "100" ));
+        postupnost.append(bdd.BDD_use(bdd, "101" ));
+        postupnost.append(bdd.BDD_use(bdd, "110" ));
+        postupnost.append(bdd.BDD_use(bdd, "111" ));
 
-            docasnyString = Integer.toBinaryString(i);
 
-            if(docasnyString.length() < 3){
-                for(int j = 0; j < (3 - docasnyString.length()); j++){
-                    stringBuilder.append(0);
-                }
-                stringBuilder.append(docasnyString);
 
-            }else{
-                stringBuilder.append(docasnyString);
-            }
-            System.out.println(stringBuilder.toString());
-            postupnost.append(bdd.BDD_use(bdd, stringBuilder.toString()));
-
-        }
+//        //KOD NA CYKLUS
+//        StringBuilder stringBuilder = new StringBuilder();
+//        String docasnyString;
+//        for(int i = 0; i < Math.pow(2, 3); i++) {
+//            stringBuilder.delete(0, stringBuilder.length());//reset String
+//            docasnyString = "";//reset String
+//
+//            docasnyString = Integer.toBinaryString(i);
+//
+//            if(docasnyString.length() < 3){
+//                for(int j = 0; j < (3 - docasnyString.length()); j++){
+//                    stringBuilder.append(0);
+//                }
+//                stringBuilder.append(docasnyString);
+//
+//            }else{
+//                stringBuilder.append(docasnyString);
+//            }
+//            System.out.println(stringBuilder.toString());
+//            postupnost.append(bdd.BDD_use(bdd, stringBuilder.toString()));
+//
+//        }
 
         System.out.println("VO FUNKCII CREATE: " + "01100110" );
         System.out.println("PO VOLANI USE: " + postupnost);
@@ -111,6 +112,9 @@ public class Main {
     public static void test1(BDD bdd){
 
         String vstup;
+        int pocetUzlov = 0;
+        int pocetKrat = 0;
+
 
         //FUNKCIA CREATE SA ZAVOLA 2000 krat, pri kazdom volani je vygenerovane nova hodnota
         for(int k = 0; k < 2000; k++) {
@@ -146,24 +150,26 @@ public class Main {
 
             }
 
+            pocetKrat++;
+            pocetUzlov+= bdd.pocetUzlov;
 
-            System.out.println(k + " POSTUPNOST");
-            System.out.println("Pocet Premennych " + bdd.pocetPremennych);
-            System.out.println("Pocet Uzlov " + bdd.pocetUzlov);
 
             //STRINGY SA ROVNAJU AK CREATE A USE FUNKCIA FUNGUJU SPRAVNE
-            if (postupnost.toString().equals(vstup)) {//POROVNA STRINGY
-                System.out.println("**Stringy sa rovnaju**");
-
-            } else{
+            if (!postupnost.toString().equals(vstup)) {//POROVNA STRINGY
                 System.out.println("**Stringy sa nerovnaju**");
+
             }
 
 
 
-
-
         }
+
+
+
+        System.out.println("Pocet Premennych " + bdd.pocetPremennych);
+        System.out.println("Pocet Uzlov " + bdd.pocetUzlov);
+        System.out.println("Vykonane: " + pocetKrat + "/2000");
+        System.out.println("Pocet Uzlov- CELKOVO " + pocetUzlov);
     }
 
 
@@ -191,7 +197,12 @@ public class Main {
     private static void test2(BDD bdd) {
 
 
+
         String vstup;
+        int pocetUzlov = 0;
+        int pocetKrat = 0;
+
+        int pocetSpravnych = 0;
 
         //FUNKCIA CREATE SA ZAVOLA 2000 krat, pri kazdom volani je vygenerovane nova hodnota
         for(int k = 0; k < 2000; k++) {
@@ -228,22 +239,28 @@ public class Main {
             }
 
 
-            System.out.println(k + " POSTUPNOST");
-            System.out.println("Pocet Premennych " + bdd.pocetPremennych);
-            System.out.println("Pocet Uzlov " + bdd.pocetUzlov);
+            pocetKrat++;
+            pocetUzlov+= bdd.pocetUzlov;
+            //System.out.println(k + " POSTUPNOST");
+
+
 
             //STRINGY SA ROVNAJU AK CREATE A USE FUNKCIA FUNGUJU SPRAVNE
-            if (postupnost.toString().equals(vstup)) {//POROVNA STRINGY
-                System.out.println("**Stringy sa rovnaju**");
-
-            } else{
+            if (!postupnost.toString().equals(vstup)) {//POROVNA STRINGY
                 System.out.println("**Stringy sa nerovnaju**");
+
+
             }
 
 
 
 
         }
+
+        System.out.println("Pocet Premennych " + bdd.pocetPremennych);
+        System.out.println("Pocet Uzlov " + bdd.pocetUzlov);
+        System.out.println("Vykonane: " + pocetKrat + "/2000");
+        System.out.println("Pocet Uzlov- CELKOVO " + pocetUzlov);
 
 
 
@@ -256,6 +273,9 @@ public class Main {
      */
     private static void test3(BDD bdd){
         String vstup;
+        int pocetUzlov = 0;
+
+        int pocetKrat = 0;
 
         //FUNKCIA CREATE SA ZAVOLA 2000 krat, pri kazdom volani je vygenerovane nova hodnota
         for(int k = 0; k < 2000; k++) {
@@ -291,17 +311,16 @@ public class Main {
 
             }
 
-
-            System.out.println(k + " POSTUPNOST");
-            System.out.println("Pocet Premennych " + bdd.pocetPremennych);
-            System.out.println("Pocet Uzlov " + bdd.pocetUzlov);
+            pocetKrat++;
+            pocetUzlov+= bdd.pocetUzlov;
+//            System.out.println(k + " POSTUPNOST");
+//            System.out.println("Pocet Premennych " + bdd.pocetPremennych);
+//            System.out.println("Pocet Uzlov " + bdd.pocetUzlov);
 
             //STRINGY SA ROVNAJU AK CREATE A USE FUNKCIA FUNGUJU SPRAVNE
-            if (postupnost.toString().equals(vstup)) {//POROVNA STRINGY
-                System.out.println("**Stringy sa rovnaju**");
-
-            } else{
+            if (!postupnost.toString().equals(vstup)) {//POROVNA STRINGY
                 System.out.println("**Stringy sa nerovnaju**");
+
             }
 
 
@@ -309,6 +328,10 @@ public class Main {
 
         }
 
+        System.out.println("Pocet Premennych " + bdd.pocetPremennych);
+        System.out.println("Pocet Uzlov " + bdd.pocetUzlov);
+        System.out.println("Vykonane: " + pocetKrat + "/2000");
+        System.out.println("Pocet Uzlov- CELKOVO " + pocetUzlov);
 
 
 
